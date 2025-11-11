@@ -210,7 +210,7 @@ end
 -- bad
 local function is_good_name(name, options, arg)
    local is_good = #name > 3
-   is_good = is_good and #name < 30
+   is_good       = is_good and #name < 30
 
    -- ...stuff...
 
@@ -219,7 +219,8 @@ end
 
 -- good
 local function is_good_name(name, options, args)
-   if #name < 3 or #name > 30 then
+   local name_length = #name
+   if (name_length < 3) or (name_length > 30) then
       return false
    end
 
@@ -351,8 +352,37 @@ local function brew_coffee(machine)
         warn("machine is nil")
     end
     if not machine.is_loaded then
-r        eturn "fill your water"
+        return "fill your water"
     end
     return "coffee brewing"
 end
 ```
+- Always put parts of combined conditions in braces, e.g.:
+```luau
+-- Bad.
+if name_length < 3 or name_length > 30 then
+  return false
+end
+
+-- Good.
+if (name_length < 3) or (name_length > 30) then
+  return false
+end
+``` 
+> Rationale: Increases readability.
+
+
+- Split complicated expressions into simpler once:
+```luau
+-- Bad.
+if (((name_length) < 3 or (name_length > 30)) and ((password_length < 3) or (password_length > 30))) then
+  return false
+end
+
+-- Good.
+local is_name_of_bad_length     = ((name_length < 3)     or (name_length > 30))
+local is_password_of_bad_length = ((password_length < 3) or (password_length > 30)
+if (is_name_of_bad_length) and (is_password_of_bad_length) then
+  return false
+end
+``` 
