@@ -226,7 +226,7 @@ local function is_good_name(name, options, args)
    -- ...stuff...
 
    return true
-end
+end 
 ```
 # Function calls
 
@@ -246,4 +246,113 @@ local an_instance = a_module.new {
    a_parameter = 42,
    another_parameter = "yay",
 }
+```
+# Declaration of Functions in Tables
+- Only declare functions inside the table for metatables:
+```luau
+-- Good.
+local version_mt = {
+   __eq = function(a, b)
+      -- code
+   end,
+   __lt = function(a, b)
+      -- code
+   end,
+}
+
+-- Good.
+function my_module.a_function(x)
+   -- code
+end
+
+-- Bad.
+local my_module = {
+    a_function = function(x)
+       -- code
+    end
+}
+```
+> Rationale: Metatables contain special behavior that affect the tables they're assigned (and are used implicitly at the call site), so it's good to be able to get a view of the complete behavior of the metatable at a glance.
+
+# Variable declaration
+-- Always use local to declare variables.
+```luau
+-- bad
+superpower = get_superpower()
+
+-- good
+local superpower = get_superpower()
+```
+> Rationale: Not doing so will result in global variables to avoid polluting the global namespace.
+
+# Variable scope
+-- Assign variables with the smallest possible scope.
+```luau
+-- bad
+local function good()
+   local name = get_name()
+
+   test()
+   print("doing stuff..")
+
+   --...other stuff...
+
+   if name == "test" then
+      return false
+   end
+
+   return name
+end
+
+-- good
+local bad = function()
+   test()
+   print("doing stuff..")
+
+   --...other stuff...
+
+   local name = get_name()
+
+   if name == "test" then
+      return false
+   end
+
+   return name
+end
+```
+> Rationale: Lua has proper lexical scoping. Declaring the function later means that its scope is smaller, so this makes it easier to check for the effects of a variable.
+
+# Conditional expressions
+Don't use the and/or idiom for the pseudo-ternary operator.
+```luau
+-- Bad.
+local function default_name(name)
+    -- return the default "Waldo" if name is nil
+    return name or "Waldo"
+end
+
+-- Good.
+local function default_name(name)
+    -- return the default "Waldo" if name is nil
+    if name == nil then
+        return "Waldo"
+    end
+    return name
+end
+
+-- Bad.
+local function brew_coffee(machine)
+    return (machine and machine.is_loaded) and "coffee brewing" or "fill your water"
+end
+
+-- Good.
+local function brew_coffee(machine)
+    if machine == nil then
+        warn("machine is nil")
+    end
+    if not machine.is_loaded then
+r        eturn "fill your water"
+    end
+    return "coffee brewing"
+end
 ```
