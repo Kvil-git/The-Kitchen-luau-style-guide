@@ -173,7 +173,11 @@ local sentence = 'The name of the program is "TheKitchen"'
 # Line lengths
 - Soft limit: 50 characters. Try to stay under that, but sometimes it is necessary to go beyond.
 - USE ONE STATEMENT PER LINE. You can use table sending syntax of calling ```luau Function { TableStuff }```, but if you have not just the table as the parameter, you must separate the table into a variable and then pass the table reference.
-- USE ONE STATEMENT PER LINE. Don't do fucking ```luau local inventory = inventories_table["Inventory .. tostring ( someFunc ( x + 125 ) * 120 )"]```. instead do
+- USE ONE STATEMENT PER LINE. Don't do fucking
+```luau
+local inventory = inventories_table["Inventory .. tostring ( someFunc ( x + 125 ) * 120 )"]
+```
+- instead do
 ```luau
 local added_x       = x + 125
 local modified_x    = someFunc(scaled_x)
@@ -187,6 +191,7 @@ local inventory     = inventories_table[inventory_key]
 - Line lengths are naturally limited by using one statement per line. If that still produces lines that are too long (e.g. an expression that produces a line over 256-characters long, for example), this means the expression is too complex and would do better split into subexpressions with reasonable names.
 
 > Rationale: No one works on VT100 terminals anymore. If line lengths are a proxy for code complexity, we should address code complexity instead of using line breaks to fit mind-bending statements over multiple lines.
+
 
 
 
