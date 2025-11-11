@@ -361,12 +361,12 @@ end
 ```luau
 -- Bad.
 if name_length < 3 or name_length > 30 then
-  return false
+    return false
 end
 
 -- Good.
 if (name_length < 3) or (name_length > 30) then
-  return false
+    return false
 end
 ``` 
 > Rationale: Increases readability.
@@ -376,13 +376,14 @@ end
 ```luau
 -- Bad.
 if (((name_length) < 3 or (name_length > 30)) and ((password_length < 3) or (password_length > 30))) then
-  return false
+    return false
 end
 
 -- Good.
 local is_name_of_bad_length     = ((name_length < 3)     or (name_length > 30))
 local is_password_of_bad_length = ((password_length < 3) or (password_length > 30)
 if (is_name_of_bad_length) and (is_password_of_bad_length) then
-  return false
+    return false
 end
 ``` 
+
