@@ -165,7 +165,7 @@ table = {
 --
 local SOME_CHAR_CONSTANT = 'E'
 ...
-local name = "TheKitchen"
+local name     = "TheKitchen"
 local sentence = 'The name of the program is "TheKitchen"'
 ```
 > Rationale: Double quotes are used as string delimiters in a larger number of programming languages. Single quotes are useful for avoiding escaping when using double quotes in literals. Single quotes are also used for single characters in a lot of C family languages.
@@ -187,5 +187,6 @@ local inventory     = inventories_table[inventory_key]
 - Line lengths are naturally limited by using one statement per line. If that still produces lines that are too long (e.g. an expression that produces a line over 256-characters long, for example), this means the expression is too complex and would do better split into subexpressions with reasonable names.
 
 > Rationale: No one works on VT100 terminals anymore. If line lengths are a proxy for code complexity, we should address code complexity instead of using line breaks to fit mind-bending statements over multiple lines.
+
 
 
