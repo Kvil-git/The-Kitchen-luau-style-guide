@@ -110,7 +110,7 @@ end
 - When creating a table, prefer populating its fields all at once, if possible:
 ```luau
 local player = {
-   name = "Jack",
+   name  = "Jack",
    class = "Rogue",
 }
 ```
@@ -187,4 +187,5 @@ local inventory     = inventories_table[inventory_key]
 - Line lengths are naturally limited by using one statement per line. If that still produces lines that are too long (e.g. an expression that produces a line over 256-characters long, for example), this means the expression is too complex and would do better split into subexpressions with reasonable names.
 
 > Rationale: No one works on VT100 terminals anymore. If line lengths are a proxy for code complexity, we should address code complexity instead of using line breaks to fit mind-bending statements over multiple lines.
+
 
