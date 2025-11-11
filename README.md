@@ -102,3 +102,59 @@ local function is_evil(alignment)
    return alignment < 100
 end
 ```
+
+# Tables
+- When creating a table, prefer populating its fields all at once, if possible:
+```luau
+local player = {
+   name = "Jack",
+   class = "Rogue",
+}
+```
+
+- You can add a trailing comma to all fields, including the last one.
+> Rationale: This makes the structure of your tables more evident at a glance. Trailing commas make it quicker to add new fields and produces shorter diffs.
+- Use plain key syntax whenever possible, use ["key"] syntax when using names that can't be represented as identifiers and avoid mixing representations in a declaration:
+```luau
+table = {
+   ["1394-E"] = val1,
+   ["UTF-8"]  = val2,
+   ["and"]    = val2,
+}
+```
+- Vertically align all the fields at the same table depth for readability. Don't vertically allign values with tables though because it will be ugly. Example:
+```luau
+-- Ugly and reads bad.
+table = {
+    ["Hi"]        = "Hello",
+    ["Bye"]       = "Goodbye",
+    ["Aintnoway"] = {
+        ["Hi"]  = "Hello",
+        ["Bye"] = "Goodbye",
+        ["KokoiDamage"] = "Neznau",
+    },
+}
+
+-- Good.
+table = {
+    ["Hi"]  = "Hello",
+    ["Bye"] = "Goodbye",
+    ["Aintnoway"] = {
+        ["Hi"]  = "Hello",
+        ["Bye"] = "Goodbye",
+        ["KokoiDamage"] = "Neznau",
+    },
+}
+```
+# Strings
+- Use double quotes whenever possible. Use single quotes for single character constants and strings that contain double quotes:
+```luau
+--
+-- CONSTANTS
+--
+local SOME_CHAR_CONSTANT = 'E'
+...
+local name = "TheKitchen"
+local sentence = 'The name of the program is "TheKitchen"'
+```
+> Rationale: Double quotes are used as string delimiters in a larger number of programming languages. Single quotes are useful for avoiding escaping when using double quotes in literals. Single quotes are also used for single characters in a lot of C family languages.
