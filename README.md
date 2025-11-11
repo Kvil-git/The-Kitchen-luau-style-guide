@@ -30,12 +30,12 @@ local function SomeVeryComplicatedStuff(): ()
     ...
 end
 ```
-- Make every function parameter typesafe. If you don't know the exact parameter types ahead of time, put the type as "PossibleType1 | PossibleType2 | PossibleType3".
-- If you don't know even the possible type of the input, put the type as "any"
+- Make every function parameter typesafe. If you don't know the exact parameter types ahead of time, put the type as ```luau "PossibleType1 | PossibleType2 | PossibleType3"```.
+- If you don't know even the possible type of the input, put the type as ```luau "any"```
 
 # Variable names
-- A very subjective point is of course making the naming as clear as possible. You should make the name as clear as possible not to yourself, but to the other people in the team.
-- Another point is making the names readable. If your variable name is longer than 2 words, you should use snake case, as also shown in the example below.
+- A very subjective point is of course making the naming as clear as possible. You should make the name as clear as possible !!!NOT TO YOUSELF!!!, but !!!TO THE OTHER PEOPLE!!! in the team.
+- Another point is making the names readable. For readability, snake case is our choise for naming variables.
 ```luau
 --
 -- THIS IS AN EXAMPLE OF A BAD VARIABLE NAME. EVEN THOUGH I KNOW THAT THIS IS ZETA OF (1), OTHER PEOPLE IN MY TEAM MOST LIKELY HAVE NO IDEA.
@@ -58,7 +58,7 @@ local ONE_HALF               = (0.5)
 local COSINE_OF_ONE_HALF     = math.cos(ONE_HALF)
 local SOME_BULLSHIT_CONSTANT = (5)
 ```
-- Use underscore '_' character for ignored variables. It is useful for loops and retrieving data from a tuple.
+- Use underscore '_' character for ignored variables. It is useful in ```luau pairs``` loops and retrieving data from a tuple.
 ```luau
 for _, value in pairs(t) do
     ...
@@ -88,7 +88,10 @@ SomeClass["__index"] = SomeClass
 
 function SomeClass.SomeMethod(self: SomeClassType)
     ...
-end  
+end
+
+local some_class_object = SomeClass.New()
+some_class_object:SomeMethod()
 ```
 - Prefer using is_ when naming boolean functions:
 ```luau
@@ -114,9 +117,19 @@ local player = {
 
 - You can add a trailing comma to all fields, including the last one.
 > Rationale: This makes the structure of your tables more evident at a glance. Trailing commas make it quicker to add new fields and produces shorter diffs.
-- Use plain key syntax whenever possible, use ["key"] syntax when using names that can't be represented as identifiers and avoid mixing representations in a declaration:
+- Use plain key syntax whenever possible, use quoted ["key"] syntax when using names that can't be represented as identifiers and never mix representations. If you can't use only plain key syntax, just use quoted ["key"] everywhere:
 ```luau
+-- Bad. Don't mix.
 table = {
+   hihi       = val0,
+   ["1394-E"] = val1,
+   ["UTF-8"]  = val2,
+   ["and"]    = val2,
+}
+
+-- Good. Just use quoted ["key"] syntax everywhere.
+table = {
+   ["Hihi"]   = val0,
    ["1394-E"] = val1,
    ["UTF-8"]  = val2,
    ["and"]    = val2,
@@ -124,14 +137,12 @@ table = {
 ```
 - Vertically align all the fields at the same table depth for readability. Don't vertically allign values with tables though because it will be ugly. Example:
 ```luau
--- Ugly and reads bad.
+-- Bad. Ugly and reads poorly.
 table = {
     ["Hi"]        = "Hello",
     ["Bye"]       = "Goodbye",
     ["Aintnoway"] = {
-        ["Hi"]  = "Hello",
-        ["Bye"] = "Goodbye",
-        ["KokoiDamage"] = "Neznau",
+        ...
     },
 }
 
@@ -140,8 +151,8 @@ table = {
     ["Hi"]  = "Hello",
     ["Bye"] = "Goodbye",
     ["Aintnoway"] = {
-        ["Hi"]  = "Hello",
-        ["Bye"] = "Goodbye",
+        ["Hi"]          = "Hello",
+        ["Bye"]         = "Goodbye",
         ["KokoiDamage"] = "Neznau",
     },
 }
@@ -176,3 +187,4 @@ local inventory     = inventories_table[inventory_key]
 - Line lengths are naturally limited by using one statement per line. If that still produces lines that are too long (e.g. an expression that produces a line over 256-characters long, for example), this means the expression is too complex and would do better split into subexpressions with reasonable names.
 
 > Rationale: No one works on VT100 terminals anymore. If line lengths are a proxy for code complexity, we should address code complexity instead of using line breaks to fit mind-bending statements over multiple lines.
+
