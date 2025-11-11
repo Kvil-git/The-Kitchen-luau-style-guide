@@ -158,3 +158,21 @@ local name = "TheKitchen"
 local sentence = 'The name of the program is "TheKitchen"'
 ```
 > Rationale: Double quotes are used as string delimiters in a larger number of programming languages. Single quotes are useful for avoiding escaping when using double quotes in literals. Single quotes are also used for single characters in a lot of C family languages.
+
+# Line lengths
+- Soft limit: 50 characters. Try to stay under that, but sometimes it is necessary to go beyond.
+- USE ONE STATEMENT PER LINE. You can use table sending syntax of calling ```luau Function { TableStuff }```, but if you have not just the table as the parameter, you must separate the table into a variable and then pass the table reference.
+- USE ONE STATEMENT PER LINE. Don't do fucking ```luau local inventory = inventories_table["Inventory .. tostring ( someFunc ( x + 125 ) * 120 )"]```. instead do
+```luau
+local added_x       = x + 125
+local modified_x    = someFunc(scaled_x)
+local scaled_x      = modified_x * 120
+local string_x      = tostring(scaled_x)
+local inventory_key = "Inventory" .. string_x
+local inventory     = inventories_table[inventory_key]
+```
+> You could say it is harder to write this type of code.
+> But it will be a gajillion times less of a pain in the ass to debug and change this code however you like.
+- Line lengths are naturally limited by using one statement per line. If that still produces lines that are too long (e.g. an expression that produces a line over 256-characters long, for example), this means the expression is too complex and would do better split into subexpressions with reasonable names.
+
+> Rationale: No one works on VT100 terminals anymore. If line lengths are a proxy for code complexity, we should address code complexity instead of using line breaks to fit mind-bending statements over multiple lines.
