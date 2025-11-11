@@ -192,6 +192,58 @@ local inventory     = inventories_table[inventory_key]
 
 > Rationale: No one works on VT100 terminals anymore. If line lengths are a proxy for code complexity, we should address code complexity instead of using line breaks to fit mind-bending statements over multiple lines.
 
+# Function declaration
+- Prefer function syntax over variable syntax. This helps differentiate between named and anonymous functions.
+```luau
+-- bad
+local nope = function(name, options)
+   -- ...stuff...
+end
 
+-- good
+local function yup(name, options)
+   -- ...stuff...
+end
+```
+- Perform validation early and return as early as possible.
+```luau
+-- bad
+local function is_good_name(name, options, arg)
+   local is_good = #name > 3
+   is_good = is_good and #name < 30
 
+   -- ...stuff...
 
+   return is_good
+end
+
+-- good
+local function is_good_name(name, options, args)
+   if #name < 3 or #name > 30 then
+      return false
+   end
+
+   -- ...stuff...
+
+   return true
+end
+```
+# Function calls
+
+- Even though Lua allows it, do not omit parenthesis for functions that take a unique string literal argument.
+```luau
+-- bad
+local data = get_data"KRP"..tostring(area_number)
+-- good
+local data = get_data("KRP"..tostring(area_number))
+local data = get_data("KRP")..tostring(area_number)
+```
+> Rationale: It is not obvious at a glace what the precedence rules are when omitting the parentheses in a function call.
+> Can you quickly tell which of the two "good" examples in equivalent to the "bad" one? (It's the second one).
+- You can and should omit parenthesis for functions that take a single table argument. E.g:
+```luau
+local an_instance = a_module.new {
+   a_parameter = 42,
+   another_parameter = "yay",
+}
+```
