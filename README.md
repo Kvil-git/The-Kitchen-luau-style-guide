@@ -43,31 +43,47 @@ end
 --
 -- REQUIRES
 --
-...
-...
+local TileCoordinatesType = require("./TileCoordinatesType")
+local Metatable           = require(game    .ReplicatedStorage       .Functions  .Metatable  .MetatableFunction)
+local Random              = require(game    .ReplicatedStorage       .Functions  .Math       .Random)
+local Enums               = require(game    .ReplicatedStorage       ["Enums and Lists"]     ["Game Enums"])
 --
 -- LOCAL TYPES
 --
-...
-...
+type Unit            = UnitType             .Unit
+type TileCoordinates = TileCoordinatesType  .TileCoordinates
 --
 -- EXPORT TYPES
 --
-...
-...
-...
+export type connection<A... = ()> = {
+	Type:							"Connection",
+	Table:							{[connection<A...>]: (A...) -> ()}?,
+	Disconnect:						(self: connection<A...>)    -> (),
+}
 --
 -- CONSTANTS
 --
-...
-...
-...
+local tilePrimaryPart = Assets.Models.tileModel.primaryPart
+local tileRadius      = tilePrimaryPart.MeshSize.Z * 3
+local root3           = math.sqrt(3)
+local chunkLength     = 5
+local chunkHeight     = 5
+local HEX_DIRECTION_OFFSETS: {Vector2} = {
+	Vector2.new( 1,  0), -- East
+	Vector2.new( 1, -1), -- NorthEast
+	Vector2.new( 0, -1), -- NorthWest
+	Vector2.new(-1,  0), -- West
+	Vector2.new(-1,  1), -- SouthWest
+	Vector2.new( 0,  1)  -- SouthEast
+}
 --
 -- VARIABLES
 --
-...
-...
-...
+local Assets = game.ReplicatedStorage:WaitForChild("Assets")
+local max    = math.max
+local min    = math.min
+local abs    = math.abs
+local round  = math.round
 --
 -- HELPER FUNCTIONS
 --
@@ -76,11 +92,21 @@ end
 --
 -- CLASS DEFINITION or CLASS DEFINITIONS depending on the amount of classes in one file
 --
-...
-...
-...
-...
-...
+local TileCoordinates   = Metatable()
+TileCoordinates.__index = TileCoordinates;
+
+-- Add tostring metamethod to enable using the tostring() function on TileCoordinates.
+function TileCoordinates.__tostring(self): string
+	return string.format("%d %d", self.q, self.r)
+end
+
+-- Simple constructor.
+function TileCoordinates.New(q:number, r:number): TileCoordinates
+    local self = (setmetatable({}, TileCoordinates) :: any) :: TileCoordinates;
+    self.q = q or 0
+    self.r = r or 0
+    return self
+end
 --
 -- RETURN VALUE
 --
@@ -461,5 +487,6 @@ if (is_name_of_bad_length) and (is_password_of_bad_length) then
     return false
 end
 ``` 
+
 
 
