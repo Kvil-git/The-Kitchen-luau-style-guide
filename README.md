@@ -1,5 +1,5 @@
-This style guides lists the coding conventions used in ["The Kitchen"](https://www.roblox.com/communities/34607511/Redstoners) aka "Redstoners" roblox game developing group.
-Hopefully lololol will also use this like please bro i beg you with all my heart bro cmon now bro pls :sob::sob::sob:🙏🙏🙏
+This style guide lists the coding conventions used in ["The Kitchen"](https://www.roblox.com/communities/34607511/Redstoners) aka "Redstoners" roblox game developing group.
+Hopefully @lololol will also use this like please bro i beg you with all my heart bro cmon now bro pls :sob::sob::sob:🙏🙏🙏
 
 # Indentation and formatting
 - Indent with 4 spaces.
@@ -12,6 +12,81 @@ for i = 1, 10 do
     end
 end
 ```
+# Writing comments
+- Use 3+ line comments for block comments.
+- Go 2 spaces away from a line you want to describe with a single line comment.
+- Comments should read like texts.
+- Describe complicated if conditions with single line comments.
+
+```luau
+--
+-- Example block comment, describing some very complicated bullshit,
+-- that happens in some extremely elaborate function.
+--
+Some_Complicated_Bullshit("blabla", 150, math.pi, "whatever idk")
+
+if some_condition then  -- some_condition? => some_inner_stuff 
+    some_inner_stuff()
+end
+
+```
+
+# Typechecking
+
+- always use "--!strict" specifier at the start of the file to enable typechecking.
+> Reasonale: Adds code suggestions + significantly reduces the amount of errors in code.
+
+# File structure
+- Use the file structure from this example:
+```luau
+--!strict
+--
+-- REQUIRES
+--
+...
+...
+--
+-- LOCAL TYPES
+--
+...
+...
+--
+-- EXPORT TYPES
+--
+...
+...
+...
+--
+-- CONSTANTS
+--
+...
+...
+...
+--
+-- VARIABLES
+--
+...
+...
+...
+--
+-- HELPER FUNCTIONS
+--
+...
+...
+--
+-- CLASS DEFINITION or CLASS DEFINITIONS depending on the amount of classes in one file
+--
+...
+...
+...
+...
+...
+--
+-- RETURN VALUE
+--
+return ...
+```
+
 
 # Documenting functions
 - A single line comment will suffice for short functions.
@@ -386,4 +461,5 @@ if (is_name_of_bad_length) and (is_password_of_bad_length) then
     return false
 end
 ``` 
+
 
