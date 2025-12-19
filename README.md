@@ -1,5 +1,58 @@
 This style guide lists the coding conventions used in ["The Kitchen"](https://www.roblox.com/communities/34607511/Redstoners) aka "Redstoners" roblox game developing group.
 Hopefully @lololol will also use this like please bro i beg you with all my heart bro cmon now bro pls :sob::sob::sob:🙏🙏🙏
+# Code sections
+- Divide the code into sections:
+```luau
+--
+-- REQUIRES
+--
+...
+
+CAN ALSO BE
+
+--
+-- REQUIRES
+--
+-- Folders
+...
+-- Requires
+...
+--
+-- EXPORT TYPES
+--
+...
+
+
+--
+-- LOCAL TYPES
+--
+...
+
+--
+-- CONSTANTS
+--
+...
+
+--
+-- VARIABLES
+--
+...
+
+--
+-- LOCAL FUNCTIONS
+--
+...
+
+--
+-- MODULE DEFINITION or CLASS DEFINITION
+--
+...
+
+--
+-- RETURN VALUE
+--
+...
+```
 
 # Indentation and formatting
 - Indent with 4 spaces.
@@ -487,6 +540,7 @@ if (is_name_of_bad_length) and (is_password_of_bad_length) then
     return false
 end
 ``` 
+
 
 
 
